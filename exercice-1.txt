@@ -1,0 +1,19 @@
+Exercice 1 : Mise en place de Kafka et envoi d'un message simple
+
+1. Démarrage de l'infrastructure :
+   - On utilise Docker Compose pour lancer les services Zookeeper et Kafka.
+   - Commande utilisée :
+     docker compose up -d zookeeper kafka
+
+2. Création du topic weather_stream :
+   - On crée un topic Kafka nommé weather_stream pour recevoir les messages.
+   - Commande utilisée :
+     docker exec kafka kafka-topics --create --topic weather_stream --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+3. Envoi d'un message statique :
+   - On envoie le message JSON {"msg": "Hello Kafka"} sur le topic weather_stream à l'aide du producteur Kafka en ligne de commande.
+   - Commande utilisée (PowerShell) :
+     echo '{"msg": "Hello Kafka"}' | docker exec -i kafka kafka-console-producer --broker-list localhost:9092 --topic weather_stream
+
+Résumé :
+On a mis en place un environnement Kafka avec Docker, créé un topic, puis envoyé un message statique sur ce topic pour valider le fonctionnement du producteur Kafka.
