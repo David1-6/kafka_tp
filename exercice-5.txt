@@ -18,5 +18,10 @@ Exercice 5 : Agrégats en temps réel avec Spark
    - Lancer le script avec le connecteur Kafka :
      docker exec -it spark-master /spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 /tmp/weather_aggregates.py
 
+4. Test (exemple complet) :
+   - Dans un autre terminal, envoie des données météo dans le flux avec :
+     python current_weather.py 48.85 2.35
+   - Observe les résultats d’agrégats affichés dans la console du script Spark.
+
 Résumé :
-Ce script permet de calculer des agrégats en temps réel sur les alertes météo, avec une fenêtre glissante, et d’afficher les résultats en continu.
+Ce script permet de calculer des agrégats en temps réel sur les alertes météo, avec une fenêtre glissante, et d’afficher les résultats en continu. Utilise current_weather.py pour générer des données de test.
