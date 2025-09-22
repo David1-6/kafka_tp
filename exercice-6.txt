@@ -1,0 +1,17 @@
+Exercice 6 : Extension du producteur météo
+
+1. Modification du producteur :
+   - current_weather.py accepte désormais la ville et le pays comme arguments.
+   - Utilise l’API Open-Meteo Geocoding pour obtenir latitude/longitude à partir de la ville et du pays.
+   - Récupère la météo pour ces coordonnées.
+   - Ajoute les champs "ville" et "pays" dans chaque message produit vers Kafka.
+
+2. Exemple d’utilisation :
+   python current_weather.py Paris France
+
+3. Dépendances :
+   - kafka-python
+   - requests
+
+Résumé :
+Chaque message météo produit contient désormais la ville et le pays, ce qui permet le partitionnement HDFS et les agrégats par région.
