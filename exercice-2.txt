@@ -1,0 +1,12 @@
+Exercice 2 : Écriture d’un consommateur Kafka
+
+1. Script Python consommateur :
+   - Le script consumer.py lit les messages d’un topic Kafka passé en argument.
+   - Utilisation : python consumer.py <topic>
+   - Affiche les messages reçus en temps réel.
+
+2. Dépendance :
+   - Nécessite la librairie kafka-python (pip install kafka-python)
+
+Résumé :
+Ce script permet de consommer et d’afficher en temps réel les messages d’un topic Kafka donné en argument, pour valider la lecture côté consommateur.
