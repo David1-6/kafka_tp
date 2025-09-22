@@ -1,0 +1,22 @@
+Exercice 5 : Agrégats en temps réel avec Spark
+
+1. Script Spark Streaming :
+   - weather_aggregates.py lit le topic weather_transformed.
+   - Implémente une sliding window de 5 minutes (glissement chaque minute).
+   - Calcule :
+     * Nombre d’alertes level_1 ou level_2 par type d’alerte (vent/chaleur)
+     * Moyenne, min, max de la température
+     * Nombre total d’alertes par position (latitude/longitude)
+   - Affiche les résultats en temps réel dans la console.
+
+2. Dépendances :
+   - pyspark (avec le connecteur spark-sql-kafka via --packages)
+
+3. Exécution :
+   - Copier le script dans le conteneur spark-master :
+     docker cp weather_aggregates.py spark-master:/tmp/weather_aggregates.py
+   - Lancer le script avec le connecteur Kafka :
+     docker exec -it spark-master /spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 /tmp/weather_aggregates.py
+
+Résumé :
+Ce script permet de calculer des agrégats en temps réel sur les alertes météo, avec une fenêtre glissante, et d’afficher les résultats en continu.
