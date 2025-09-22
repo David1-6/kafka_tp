@@ -1,0 +1,13 @@
+Exercice 3 : Streaming de données météo en direct
+
+1. Script Python producteur :
+   - current_weather.py interroge l’API Open-Meteo pour une latitude/longitude passée en argument.
+   - Utilisation : python current_weather.py <latitude> <longitude>
+   - Envoie la réponse JSON dans le topic Kafka weather_stream.
+
+2. Dépendances :
+   - kafka-python
+   - requests
+
+Résumé :
+Ce script permet de streamer en temps réel les données météo d’une position géographique dans Kafka, pour simuler un flux de données météo.
