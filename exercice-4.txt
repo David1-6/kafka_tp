@@ -1,0 +1,26 @@
+Exercice 4 : Transformation des données et détection d’alertes
+
+1. Script Spark Streaming :
+   - weather_transformer.py lit le topic weather_stream en temps réel avec Spark.
+   - Détecte les alertes de vent et de chaleur selon les seuils fournis.
+   - Ajoute les colonnes event_time, temperature, windspeed, wind_alert_level, heat_alert_level.
+   - Écrit le flux transformé dans le topic Kafka weather_transformed.
+
+2. Dépendances :
+   - pyspark
+   - kafka-python
+   - requests
+   - Le connecteur Spark-Kafka est chargé dynamiquement avec l’option --packages lors de l’exécution.
+
+3. Exécution :
+   - Copier le script dans le conteneur spark-master :
+     docker cp weather_transformer.py spark-master:/tmp/weather_transformer.py
+   - Lancer le script avec le connecteur Kafka :
+     docker exec -it spark-master /spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 /tmp/weather_transformer.py
+
+4. Test :
+   - Utiliser current_weather.py pour envoyer des données météo dans weather_stream.
+   - Utiliser consumer.py pour lire les messages transformés sur weather_transformed.
+
+Résumé :
+Ce script permet de traiter en temps réel les données météo, de détecter les alertes et de produire un flux enrichi dans un nouveau topic Kafka. L’intégration Spark-Kafka nécessite l’option --packages lors de l’exécution.
