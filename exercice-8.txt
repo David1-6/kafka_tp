@@ -1,0 +1,33 @@
+Exercice 8 : Visualisation et agrégation des logs météo
+
+Objectif :
+Consommer les logs météo stockés dans HDFS, agréger les données et générer des visualisations pour l’analyse des phénomènes météo.
+
+Scripts et fichiers utilisés :
+- visualize_weather_logs.py : Script Python qui lit tous les fichiers alerts.json depuis HDFS, extrait les données météo, effectue les agrégations et génère les graphiques demandés.
+- simulate_weather_production.py : Script pour simuler l’envoi de mesures météo sur plusieurs villes et pays, afin d’obtenir des séries temporelles exploitables.
+- current_weather.py : Producteur Kafka de données météo (utilisé par le simulateur).
+- hdfs_alert_consumer.py : Consommateur Kafka qui stocke les messages dans HDFS.
+- requirements.txt : Dépendances Python (pandas, matplotlib, kafka-python, requests).
+- docker-compose.yml, python-client.Dockerfile : Pour exécuter les scripts dans un conteneur avec accès à HDFS et Kafka.
+
+Procédure :
+1. Simuler l’envoi de mesures météo sur plusieurs villes/pays :
+   docker exec -it python-client python /workspace/simulate_weather_production.py
+
+2. Vérifier que les fichiers alerts.json sont bien présents dans HDFS (un par ville/pays) :
+   docker exec -it python-client hdfs dfs -ls -R /hdfs-data
+
+3. Générer les visualisations :
+   docker exec -it python-client python /workspace/visualize_weather_logs.py
+
+4. Récupérer les graphiques générés (PNG) dans le dossier /workspace du conteneur python-client.
+
+Visualisations produites :
+- Évolution de la température au fil du temps (temperature_evolution.png)
+- Évolution de la vitesse du vent (wind_speed_evolution.png)
+- Nombre d’alertes vent et chaleur par niveau (si données présentes)
+- Code météo le plus fréquent par pays (weather_code_by_country.png)
+
+Résumé :
+Les données météo sont agrégées et visualisées automatiquement à partir des logs HDFS, permettant une analyse multi-villes et multi-pays. Les scripts fournis permettent de simuler, stocker, agréger et visualiser l’ensemble du pipeline météo.
