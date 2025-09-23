@@ -17,7 +17,9 @@ schema = StructType([
         StructField("time", StringType())
     ])),
     StructField("latitude", DoubleType()),
-    StructField("longitude", DoubleType())
+    StructField("longitude", DoubleType()),
+    StructField("ville", StringType()),
+    StructField("pays", StringType())
 ])
 
 # Lecture du flux Kafka
@@ -37,7 +39,9 @@ flat_df = json_df.select(
     col("data.current_weather.windspeed").alias("windspeed"),
     col("data.current_weather.time").alias("event_time"),
     col("data.latitude"),
-    col("data.longitude")
+    col("data.longitude"),
+    col("data.ville").alias("ville"),
+    col("data.pays").alias("pays")
 )
 
 # Détection des alertes

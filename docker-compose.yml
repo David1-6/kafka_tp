@@ -1,5 +1,23 @@
 services:
+  python-client:
+    build:
+      context: .
+      dockerfile: python-client.Dockerfile
+    container_name: python-client
+    volumes:
+      - ./:/workspace
+    networks:
+      - big-data-network
+    environment:
+      - HADOOP_HOME=/opt/hadoop
+      - JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+    depends_on:
+      - namenode
+    command: ["tail", "-f", "/dev/null"]
   namenode:
+    build:
+      context: .
+      dockerfile: namenode.Dockerfile
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
     container_name: namenode
     ports:
@@ -8,6 +26,7 @@ services:
       - "50070:50070"  # Interface Web HDFS (optionnel, pour vérifier l'état de HDFS)
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
+      - ./:/workspace
     environment:
       - CLUSTER_NAME=tp-big-data
     env_file:

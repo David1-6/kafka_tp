@@ -3,12 +3,15 @@ import requests
 from kafka import KafkaProducer
 import json
 
-if len(sys.argv) != 3:
-    print("Usage: python current_weather.py <ville> <pays>")
+
+# Utilisation : python current_weather.py <ville> <pays> [topic]
+if len(sys.argv) not in (3, 4):
+    print("Usage: python current_weather.py <ville> <pays> [topic]")
     sys.exit(1)
 
 ville = sys.argv[1]
 pays = sys.argv[2]
+topic = sys.argv[3] if len(sys.argv) == 4 else "weather_stream"
 
 # Appel à l'API de géocodage Open-Meteo pour obtenir latitude/longitude
 geocode_url = f"https://geocoding-api.open-meteo.com/v1/search?name={ville}&country={pays}&count=1&language=fr&format=json"
@@ -33,11 +36,10 @@ weather_data["ville"] = ville
 weather_data["pays"] = pays
 
 # Envoi dans Kafka
-topic = "weather_stream"
 producer = KafkaProducer(
-    bootstrap_servers=["localhost:29092"],
+    bootstrap_servers=["kafka:9092"],
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 producer.send(topic, weather_data)
 producer.flush()
-print(f"Données météo envoyées pour {ville}, {pays} (lat={latitude}, lon={longitude})")
+print(f"Données météo envoyées pour {ville}, {pays} (lat={latitude}, lon={longitude}) sur le topic {topic}")

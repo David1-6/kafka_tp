@@ -1,0 +1,4 @@
+{"temperature": 12.4, "windspeed": 12.2, "event_time": "2025-09-22T22:47:04.856Z", "latitude": 48.84, "longitude": 2.3599997, "wind_alert_level": "level_1", "heat_alert_level": "level_0"}
+{"temperature": 12.4, "windspeed": 12.2, "event_time": "2025-09-22T22:58:37.681Z", "latitude": 48.84, "longitude": 2.3599997, "wind_alert_level": "level_1", "heat_alert_level": "level_0"}
+{"temperature": 12.2, "windspeed": 13.0, "event_time": "2025-09-22T23:08:57.589Z", "latitude": 48.86, "longitude": 2.3399997, "wind_alert_level": "level_1", "heat_alert_level": "level_0"}
+{"temperature": 8.2, "windspeed": 6.3, "event_time": "2025-09-22T23:10:38.663Z", "latitude": 45.84, "longitude": 1.2399998, "wind_alert_level": "level_0", "heat_alert_level": "level_0"}

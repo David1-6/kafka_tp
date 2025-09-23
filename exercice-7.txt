@@ -1,0 +1,28 @@
+Exercice 7 : Stockage automatisé des alertes dans HDFS organisé
+
+Objectif :
+Automatiser le stockage des alertes météo dans HDFS, organisées par pays et ville, sans intervention manuelle.
+
+Scripts et fichiers utilisés :
+- hdfs_alert_consumer.py : Consommateur Kafka qui lit le topic weather_transformed, sauvegarde chaque alerte localement puis la copie automatiquement dans HDFS (/hdfs-data/{pays}/{ville}/alerts.json).
+- current_weather.py : Producteur Kafka pour générer des messages de test (topic configurable).
+- requirements.txt : Dépendances Python (kafka-python, requests).
+- docker-compose.yml, python-client.Dockerfile : Pour exécuter le consommateur dans un conteneur avec accès à HDFS et Kafka.
+
+Procédure :
+1. Lancer l'infrastructure minimale :
+   docker compose up -d kafka zookeeper namenode datanode python-client
+
+2. Lancer le consommateur automatisé dans le conteneur python-client :
+   docker exec -it python-client python /workspace/hdfs_alert_consumer.py weather_transformed
+
+3. Générer des messages de test (depuis python-client) :
+   python /workspace/current_weather.py Paris France weather_transformed
+   python /workspace/current_weather.py Lyon France weather_transformed
+
+4. Vérifier la présence des fichiers dans HDFS (depuis python-client ou namenode) :
+   hdfs dfs -ls /hdfs-data/France/Paris/
+   hdfs dfs -cat /hdfs-data/France/Paris/alerts.json
+
+Résumé :
+Chaque alerte météo reçue sur le topic Kafka est automatiquement stockée dans HDFS, organisée par pays et ville, sans manipulation manuelle. Cette automatisation permet un partitionnement efficace et une exploitation directe des données dans le cluster Big Data.
