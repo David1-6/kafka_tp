@@ -1,0 +1,24 @@
+Exercice 9 : Récupération de séries historiques longues
+
+Objectif :
+Télécharger les données météo historiques (10 ans) pour une ville donnée via l’API Open-Meteo Archive, stocker ces données brutes dans Kafka, puis les sauvegarder dans HDFS sous /hdfs-data/{country}/{city}/weather_history_raw.
+
+Scripts et fichiers utilisés :
+- produce_weather_history.py : Script Python qui télécharge les données météo historiques pour une ville (API Open-Meteo Archive) et les envoie dans un topic Kafka (weather_history_raw).
+- consume_weather_history.py : Consommateur Kafka qui lit le topic weather_history_raw et sauvegarde les données brutes dans HDFS (/hdfs-data/{country}/{city}/weather_history_raw/weather_history_raw.json).
+- requirements.txt : Dépendances Python (kafka-python, requests).
+- docker-compose.yml, python-client.Dockerfile : Pour exécuter les scripts dans un conteneur avec accès à HDFS et Kafka.
+
+Procédure :
+1. Lancer le consommateur dans le conteneur python-client :
+   docker exec -it python-client python /workspace/consume_weather_history.py weather_history_raw
+
+2. Lancer le producteur pour Paris (exemple) :
+   docker exec -it python-client python /workspace/produce_weather_history.py Paris France 48.8566 2.3522 weather_history_raw
+
+3. Vérifier la présence et le contenu du fichier dans HDFS :
+   docker exec -it python-client hdfs dfs -ls /hdfs-data/France/Paris/weather_history_raw
+   docker exec -it python-client hdfs dfs -cat /hdfs-data/France/Paris/weather_history_raw/weather_history_raw.json
+
+Résumé :
+Les séries météo historiques sont téléchargées, transmises via Kafka, puis stockées brutes dans HDFS pour exploitation ultérieure. Les scripts fournis automatisent l’ensemble du pipeline d’ingestion historique.
